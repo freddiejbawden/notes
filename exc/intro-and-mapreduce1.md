@@ -16,12 +16,12 @@ Most big data applications follow the same structure:
 The domain of Extreme Computing looks at the design, implementation and architecture behind creating systems that deal with huge amounts of data. There are three main subsections: 
 * Analytics - how can we process this data
 * Data Management - how can we store this data 
-* Resource Managment - how we manage the deviceese that store the data
+* Resource Management - how we manage the devices that store the data
 
 There are two "roles" within a big data application (BDS): 
 
-* Application programmer: specialises in how to solve the problem using existing systems. 
-* System Architect: specialises in how to build a new system for a big data problem
+* Application programmer: specializes in how to solve the problem using existing systems. 
+* System Architect: specializes in how to build a new system for a big data problem
 
 > *Aside: How _Big_ is Big Data?* 
 > 
@@ -179,7 +179,7 @@ The master regularly writes checkpoints to a external source. This means that on
 
 * When a map completes that has already finished, we throw away the result
 
-* When a reduce finishes, it writes to the output file with a remane call, this is an inheriently atomic call; meaning that only one reduction task can write at a time.
+* When a reduce finishes, it writes to the output file with a rename call, this is an inheriently atomic call; meaning that only one reduction task can write at a time.
 
 #### Non-Deterministic Map and Reduce Functions
 
@@ -202,3 +202,35 @@ We want R also to be small enough to be managable at the output since each R par
 ### Dealing with Slow Machines
 
 An issue with MapReduce is that if a machine is taking a long time to finish, the whole process slows. To stop this, we  schedule back up tasks to run when we are close to completion of the entire program to  hopefully step in if the current task fails.
+
+## Improving  MapReduce
+
+### Paritioning Function
+
+We can change our R parition function to change how our output is put together. For example if we have a set of webpages, we can parition by authoritative domain (google.com, yahoo.com)
+
+### Ordering Guarantees
+
+It is benefitcal to guarentee that our paritions are sorted in a set order.  
+
+###  Combiner Function
+
+As sometimes the map function will output a large number ofkey values,  e.g.  a document may contain hundreds of "the" words. We can do mini-reductions  before sending over the network to reduce load. 
+
+### Skipping Bad Records
+
+If we have a stupid  big amount of data,  fixing  the errors might not be feasible, so we just drop them and report to the  master that a record failed.  This record is included in the re-execution to avoid it. 
+
+### Status Information
+
+The master can run a HTTP server and serve a UI for human inspection  of the task.
+
+### Counters
+
+We can run counters in our map  function to return more inforation about our data. For example, couting the number of uppercase letters in _all_ documents.
+
+## Performance
+
+Most MapReduce programs form a sloped graph when the instantaneous input volume that is being processed. This is due to more machines getting assigned the task over time (slope up), and the nondeterministic time to completetion of each (slope down)
+!["MapReduce Diagram"](assets/mapreduce1.png)
+
