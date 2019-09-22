@@ -232,5 +232,5 @@ We can run counters in our map  function to return more inforation about our dat
 ## Performance
 
 Most MapReduce programs form a sloped graph when the instantaneous input volume that is being processed. This is due to more machines getting assigned the task over time (slope up), and the nondeterministic time to completetion of each (slope down)
-!["MapReduce Diagram"](assets/mapreduce1.png)
+!["MapReduce Diagram"](assets/mapreduce4.png)
 
