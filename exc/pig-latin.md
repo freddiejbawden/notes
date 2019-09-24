@@ -1,4 +1,4 @@
-# Distributed Query Processing with Pig
+### Distributed Query Processing with Pig
 
 ## What is Pig?
 
@@ -197,4 +197,10 @@ The reduce step for each CO(GROUP) completes the operation and passes the data a
 
 ## Applications of Pig
 
-###
+### Rollup Aggregates
+
+Computing statistics for user activity from logs, web crawls and other data sets can be done easily  with Pig. Pig is more suited to this than raw MapReduce as you simply see the calculations taking place step by step rather than trying to develop your own  all-in-one  function.  
+
+### Temporal Analysis
+
+Changing data  over time. We can use Pig to analyse distribitions. COGROUP is good for thsi as we can get a set of search queries from across many logs and collate them into one structure quickly. We can then use UDFs to create repeatable functions for each of them. 

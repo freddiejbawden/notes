@@ -123,7 +123,6 @@ Defining a map function that emits `<target,source>` for each webpage allows us 
 
 #### Distributed Sort
 
-*** update from MapReduce ***
 
 ## Implementing MapReduce
 
