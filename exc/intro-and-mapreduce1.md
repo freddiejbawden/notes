@@ -147,7 +147,7 @@ To reduce load on a single machine, MapReduce divides up the map tasks across _M
 
 2. One of the worker machines is assigned as the _master_, the master is responsible for deligating M map and R reduce tasks to  idle machines.
 
-3. A map worker reads a split, parses it into (key,value) pairs which it then processes in a Map function. The output is buffered in memory.
+3. A map worker reads a split, parses it into (key,value) pairs which it then processes in a Map function. The output is buffered in memory. This can be done using a combiner, a combiner acts a mini reducer and reduces small amounts of the mapped data into a single data structure to reduce te network traffic. For example, if you are doing a word count - once the map function finished for one task, you can sum the totals before sending it. 
 
 4. Occasionally, buffered pairs are stored on the local disk and locations passed to the master for reduction workers. 
 
@@ -182,7 +182,7 @@ The master regularly writes checkpoints to a external source. This means that on
 
 #### Non-Deterministic Map and Reduce Functions
 
-Most map and reduce operators are deeterministic, this  means that it is easy to visualise and step through how a program  will execute. 
+Most map and reduce operators are deterministic, this  means that it is easy to visualise and step through how a program  will execute. 
 
 However, with non deterministic functions - reduction functions can behave differently due to the output of the map function being different.
 
@@ -232,4 +232,40 @@ We can run counters in our map  function to return more inforation about our dat
 
 Most MapReduce programs form a sloped graph when the instantaneous input volume that is being processed. This is due to more machines getting assigned the task over time (slope up), and the nondeterministic time to completetion of each (slope down)
 !["MapReduce Diagram"](assets/mapreduce4.png)
+
+## Architecture
+
+MapReduce uses a master node to control all task performing slaves. A master contains a _Job Tracker_ and a _NameNode_. 
+These command the slaves, each of which contain a _task tracker_ and a _data node_. A slave can execute both map and reduce functions using its tracker. 
+
+A similar architecture is used for the data store, Namenode and datanode
+
+!["MapReduce Master Architecture"](assets/mapreduce5.png)
+
+### Solving Design Challeges
+
+#### Parallalisation
+
+Slaves execute map and reduce tasks on independent data stores simaltainously, this creates parallelistaion as a result. 
+
+#### Communication 
+
+Shuffle and sort means that slaves don't need to push files to a master datastore, we can collect them and move them to R partitions independently
+
+#### Synchronization (ensuring atomicity)
+
+MapReduce uses the barrier method of ensuring synchronization. The barrier method halts execution of a thread until all other threads have reached that point, after this they can proceed again.
+
+#### Load Balancing
+
+As tasks are more or less equal due to the splitting of the input into chunks. This implicitly adds load balancing to the system. 
+
+## Limitations Of MapReduce
+s
+Does not work for 
+*  Graph algorithms 
+* Iterative 
+* Stream Processing
+* Low-level abstraction
+
 

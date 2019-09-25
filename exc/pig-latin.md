@@ -177,6 +177,11 @@ Pig must build a logical plan as to how to carry out a query. It does this by wo
 
 No processing happens until the planner hits a STORE command, at which point the logical plan is complied. This means that we can optimize our logical plan further before we run the query.
 
+
+!["Logical Plan"](assets/pig4.png)
+
+This physical plan allows for optimisations to take place before  going  into MapReduce.
+!["Physical Plan"](assets/pig5.png)
 ### Compilation into MapReduce
 
 MapReduce steps are produced from the logical plan created in the previous step. There are several steps involved in this stage.
@@ -186,6 +191,7 @@ All CO(GROUP)s are split into distinct map-reduce jobs with their own functions.
 The reduce step for each CO(GROUP) completes the operation and passes the data as the input for the next operation.
 
 !["Pig Plan to Map Reduce"](assets/pig2.png)
+!["Pig Plan to Map Reduce"](assets/pig3.png)
 
 > _Aside_: Ensuring Parallelism
 >
@@ -194,6 +200,10 @@ The reduce step for each CO(GROUP) completes the operation and passes the data a
 > For FILTER and FOREACH, we inherit these from the execution of the map function during a MapReduce Job
 >
 > CO(GROUP) paralellism is achieved through reduce's partioning during MapReduce
+### Advantages of Staged-Compilations
+
+* SQL query optimisations
+* MapReduce specific optimizations
 
 ## Applications of Pig
 
@@ -203,4 +213,10 @@ Computing statistics for user activity from logs, web crawls and other data sets
 
 ### Temporal Analysis
 
-Changing data  over time. We can use Pig to analyse distribitions. COGROUP is good for thsi as we can get a set of search queries from across many logs and collate them into one structure quickly. We can then use UDFs to create repeatable functions for each of them. 
+Changing data  over time. We can use Pig to analyse distributions. COGROUP is good for this as we can get a set of search queries from across many logs and collate them into one structure quickly. We can then use UDFs to create repeatable functions for each of them. 
+
+## Related Systems
+
+* Apache Hive 
+* DryadLINQ
+* Shark/Spark SQL
