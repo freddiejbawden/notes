@@ -48,4 +48,10 @@ Mutations are usually performed after crossover with very low probability.
 * Many parameters to optimise; population size, fitness cut off, mutation rate etc.
 * Valid and useful mutation and crossovers can be difficult to form
 
-## Canonical Genetic Algorithms
+## Real-world GA Methods
+
+### Roulette Wheel Selection
+
+When choosing the top X candidates, we often end up with stagnation in  our gene pool as we tend towards a local optima.
+
+By employing weighted probability to select our canditates we can allow a more diverse gene pool. 
