@@ -56,6 +56,6 @@ If t > 0, determine ΔF = F(x_t) - F(x_(t-1))
 * May be faster than random search
 **Cons**
 * Usually only one agent so slow
-* Not applicable to real world - energy systems may not be at their minimal energy at the lowestt fitness. See <a href="https://www.youtube.com/watch?v=xe-f4gokRBs">Prinz Rupert's drops</a>
+* Not applicable to real world - energy systems may not be at their minimal energy at the lowest fitness. See <a href="https://www.youtube.com/watch?v=xe-f4gokRBs">Prinz Rupert's drops</a>
 
 
