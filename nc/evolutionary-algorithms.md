@@ -5,6 +5,10 @@ Evolutionary algorithms take insipration from natural selection by employing:
 * Selecting good individuals
 * Replenishing the population
 
+## Continuous Representations
+
+W must define a continuous representation for search and optimization. Our individuals can be represented using a vector of real numbers which describe current solutions of the problem. 
+
 ## Hill Climbing
 
 A hill climbing algorithm aims to find a global minima or maxima by continually making small changes to its subject.
@@ -58,4 +62,19 @@ If t > 0, determine ΔF = F(x_t) - F(x_(t-1))
 * Usually only one agent so slow
 * Not applicable to real world - energy systems may not be at their minimal energy at the lowest fitness. See <a href="https://www.youtube.com/watch?v=xe-f4gokRBs">Prinz Rupert's drops</a>
 
+## Multidimensional Mutations
+
+We can use corrolation matrices to generate offspring in a M-D continous space. 
+
+When walking in a M-D space, we can find the gradient (the direction of greatest change). 
+
+!["A"](assets/mdec.png)
+
+## Nested Evolution
+
+We often find many local maxima, we can isolate these "islands" and evolve them to a maxima. We then cross them and start over. This allows for us to walk between peaks rather than getting stuck in one. 
+
+By evolving the solutions in this we hope to gain a better solution as an isolated population can evolve special charateristics that might not occur in others.
+
+## The Maths
 
