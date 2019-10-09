@@ -133,11 +133,11 @@ Another benefit of large chunks is we can reduce the network overhead by having 
 
 A _disadvantage_ of this is that a small file can become an access "hot spot" if many clients try and access the same file, if it were in smaller chunks this load would be spread across the system. This issue was mitigated by spreading the files across more DataNodes. 
 
-### Guarentees 
+### Guarantees 
 
 There are two different terms we use to define the state of a chunk;
 
-**Consistant**: all clients see the same data, regardless of location
+**Consistent**: all clients see the same data, regardless of location
 
 **Defined**: the client can see the changes applied to the file in their entirety.
 
@@ -164,7 +164,7 @@ This splits the operation into two paths, the control path (1 & 2) and the data 
 
 GFS decouples the flow of data from control flow. Data flow is handled linearly, this means that we can make use of the computers full bandwidth to transfer the data. 
 
-To move linearly effectivly, we hop to the closest machine in terms of network topology. 
+To move linearly effectively, we hop to the closest machine in terms of network topology. 
 
 We also use TCP piplelining (start transfering out when we receieve) to minimise latency.
 
@@ -178,16 +178,28 @@ A result of this is that a replica may not match bytewise, however will have the
 
 ## Garbage Collection
 
-After a file is deleted, GFS does not immediatly get back the storage space. It only occurs occasionally when a _garbage collection_ round is done. 
+After a file is deleted, GFS does not immediately get back the storage space. It only occurs occasionally when a _garbage collection_ round is done. 
 
 The garbage collector looks at the operation log to see a deletion that has not been cleaned up. If a file has been deleted for a set length of time during the heartbeat inspection, it is removed. 
 
-An issue with this method is that apps that need to create temp files might fill up a smaller DFS leaving no space for permenent files. 
+An issue with this method is that apps that need to create temp files might fill up a smaller DFS leaving no space for permanent files. 
 
 ## Stale Replica Detection
 
-Chunk Replicas may become stale if a chunkserver fails and missees mutation to the chunk while it is down. For each chunck, the master maintains a version number. 
+Chunk Replicas may become stale if a chunk server fails and misses mutation to the chunk while it is down. For each chunk, the master maintains a version number. 
 
-## Fault Tolerance
+> _Aside_: Exam Questions
+>
+> It was noted that in the exam, GFS questions will often be about extensions to the system; e.g. how can you extend the replication protocol to ensure replication across data centres.
 
-### Master
+## Faults
+
+### Crash Faults
+
+Occurs when the machines fails, this causes a _fail-stop_. This is easy to design around as detecting these faults are easy. GFS uses a heart beat for this.
+
+### Byzantine Faults
+
+Arbitrary State Corruption; failure due to an internal failure. For example; bit flipping due to radiation. 
+
+GFS combats these using traditional checksums. 

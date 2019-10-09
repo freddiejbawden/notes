@@ -80,6 +80,9 @@ As PSO uses a lot of parameters, we may need to tune the weighting and number of
 
 Each loop we calculate the fitness and update the local, global and all time best fitness values. We then use this new information to update the velocities and positions.
 
+α1, α2: The forces applied at each step
+ω: Carry over from the last step
+
 ### Convergence
 
 **Failure**: Swarm diverges or stagnates
@@ -111,7 +114,9 @@ We can change the algorithm in many ways:
 
 ### Separation 
 
-As in Boid's Flocking, we can make sure that our particles are separated by some distance, this allows us to cover more of the search space. This also helps avoid collapse..
+As in Boid's Flocking, we can make sure that our particles are separated by some distance, this allows us to cover more of the search space. This also helps avoid collapse.
+
+Seperation can hamper the late game, as it might stop convergence. 
 
 ### Predator-prey
 
