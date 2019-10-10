@@ -111,4 +111,10 @@ Odds Ratio can show a relationship between two different variables. For example 
 
 This uses the probability of an event occurring in a similar way to the odds ratio.
 
-It measures the relative risk betweeen two varialbes.
+It measures the relative risk between two variables
+
+### Cohort-level analysis
+
+We can look at the cohort to ensure that the data is not biased.
+
+By examining the whole cohort, we can gain more insight about the field of study. For example, a left handed persons gait is very different to a right handed. 
