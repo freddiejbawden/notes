@@ -66,5 +66,37 @@ We can use common elements such as loops, functions or conditionals to reduce va
 
 We can use co-evolution to define fitness based on others in the population.
 
-We can use inteligent editing, multiplying by 0 are not going to yield good results generally so we can kill these immeidatly.
+We can use intelligent editing, multiplying by 0 are not going to yield good results generally so we can kill these immediately.
+
+## Troubleshooting
+
+GPs can be tricky due to the large search space. To help you succeed with them, you can:
+
+* Study your population; means, varaiance, depth, size etc.
+* Checkpoint your results
+* Control bloat by punishing large programs
+* Accepting that no program is error-free. 
+
+## Cartesian Genetic Programming
+
+Rather than have a program represented as a tree, we use a graph built from primitives. This allows for more complex evolution of the GP. 
+
+We use a two dimensional method to allow the network add more complexity by passing values between nodes no just processing it in one.
+
+Many nodes don't effect the output, this is similar to junk DNA. To combat this we choose a small group of functions to hopefully evolve the useful ones. 
+
+## Neuroevolution
+
+Designing CNN architectures still requires expert knowledge and a lot of trail and error. 
+
+Neuroevolution uses genome for high-level building blocks of a neural network, such as 
+* convolution
+* max pooiling
+* summation
+* concatenation
+
+The phenotype is the actual neural network, fitness is determined bt training on a test set
+
+
+
 
