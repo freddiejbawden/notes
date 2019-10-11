@@ -203,3 +203,18 @@ Occurs when the machines fails, this causes a _fail-stop_. This is easy to desig
 Arbitrary State Corruption; failure due to an internal failure. For example; bit flipping due to radiation. 
 
 GFS combats these using traditional checksums. 
+
+##  Fault Tolerance
+
+
+### State Machien Replication
+
+State machine replication is a method of detecting faults by having a deterministic set of states. If a state machine's state and output differs from the others, a fault has occurred.
+
+To implement this we need at least 3 machines to detect the failure, one which is faulty and two whom we compare State and Output. We can grow this fact to find that for supporting F failures, we need `2F+1` copies of the state machine.  
+
+### Leases
+
+Leases aim to solve issues with consistancy between caches and the file store
+
+A lease is a contract that gives a holder specified rights over property for a limited period of time. In caching, this grants its holder control over its data. If a client wishes to write data, the lease holder must approve it. 
