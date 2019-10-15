@@ -39,11 +39,11 @@ A table is made up of rows, column and vales.
 
 ### Row
 
-A row is uniquely identified using a key. They are sorted alphabetical order. All rows are atomic however they do not support transactions across rows. Transaction guarantees only apply to a single row. This design decision makes it easier for clients to reason about a table's behaviour under concurrent updates as there will never be a half completed transaction. 
+A row is uniquely identified using a key. They are sorted alphabetical order. All rows are atomic however they do not support transactions across rows. Transaction guarantees only apply to a single row. This design decision makes it easier for clients to reason about a table's behavior under concurrent updates as there will never be a half completed transaction. 
 
-A sequence of rows are known as a _tablet_. Structuring rows in tablets allows for faster access. Note: BigTable doesn't explicitly support tablets, it is a design pattern with the ID. Using tablets makes reading short ranges quicker as they are usually in a few machines rather than spread across a large number. 
+A sequence of rows are known as a **_tablet_**. Structuring rows in tablets allows for faster access. Note: BigTable doesn't explicitly support tablets, it is a design pattern with the ID. Using tablets makes reading short ranges quicker as they are usually in a few machines rather than spread across a large number. 
 
-Tablets can be exploited in BigTable to make analysis more efficent, for example grouping tablets by domain can help crawlers look at a set of related pages quickly. 
+Tablets can be exploited in BigTable to make analysis more efficient, for example grouping tablets by domain can help crawlers look at a set of related pages quickly. 
 
 >_Aside_: Possible Exam Question
 >
@@ -57,7 +57,7 @@ Tablets can be exploited in BigTable to make analysis more efficent, for example
 > 
 > An Atomic Operations is one that either completes in its entirety or not at all. This means that you cannot perform part of an operations. <a href="https://www.youtube.com/watch?v=Y7ulFqYjaT4">More detail</a>
 
-### Columm
+### Column
 
 A column are organized by _families_.; where family is a set of related columns e.g. Personal Info family could include Name, Address, Phone. 
 
@@ -135,7 +135,7 @@ This method can store 2^61 128MB tablets with a 3 layer structure.
 
 Each tablet is assigned to one tablet server at a time. The master keeps track of the current assignment of tablets to tablet servers. 
 
-BigTablet uses Chubby to keep track of tablet servers. When a tablet server is down. We detect it through polling tablet servers for the status of their Chubby lock, it the tablet server has lost its lock or the request returned no lock, we try to reestabilish the lock. If we reacquire the lock, we know that Chubby is working but the tablet server is not. The master then moves and rebalances the tablets from the server to a different location. 
+BigTable uses Chubby to keep track of tablet servers. When a tablet server is down. We detect it through polling tablet servers for the status of their Chubby lock, it the tablet server has lost its lock or the request returned no lock, we try to reestablish the lock. If we reacquire the lock, we know that Chubby is working but the tablet server is not. The master then moves and rebalances the tablets from the server to a different location. 
 
 ### Tablet Serving
 
@@ -156,9 +156,11 @@ When a write operation performs the following steps happen
 1. The server checks it is well formed and that the sender is authorized. 
 2. The SSTables files in GFS are read and the changes stated in the memtable are applied to get the current version of the table. 
 
-!["Tablet Serving"](assets/bigtable3.md)
+!["Tablet Serving"](assets/bigtable3.png)
 
 ### Compactions 
+
+Log structured merge trees 
 
  If the memtable has grown too large, it is frozen a new one is create and the frozen memtable is converted into an SSTable and written to GFS. This allows the memory usage of the tablet server to be kept small; and reduces the amount of data that has to be read from the commit log during recovery.
 
@@ -170,11 +172,11 @@ There were a number of refinements performed on top of the base implementation t
 
 ### Locality Groups
 
-To improve the efficiency of reading one part of a column family, we split the columns into locality groups. These are put into seperate SSTables meaning that when a client wants to access only one column family, they can do so without having to read unneeded family. 
+To improve the efficiency of reading one part of a column family, we split the columns into locality groups. These are put into separate SSTables meaning that when a client wants to access only one column family, they can do so without having to read unneeded family. 
 
 ### Compression
 
-By compressing locality groups, we can save space and store more tablets and reduce network traffic. However the compression used isn't the most space efficient as the designers proirtised speed over space saving. 
+By compressing locality groups, we can save space and store more tablets and reduce network traffic. However the compression used isn't the most space efficient as the designers prioritized speed over space saving. 
 
 ### Caching for Read Ops
 
@@ -183,3 +185,4 @@ The tablet server uses two levels of caching; the first is a scan cache that sto
 ### Bloom Filters
 
 As read ops need to scan all SSTables this could result in many disk accesses. We reduce this by using a Bloom Filter which tests if an element is a member of a set very efficiently. This allows use to see if an SSTable may contain data from the needed row/column
+
