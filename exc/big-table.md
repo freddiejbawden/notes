@@ -186,3 +186,35 @@ The tablet server uses two levels of caching; the first is a scan cache that sto
 
 As read ops need to scan all SSTables this could result in many disk accesses. We reduce this by using a Bloom Filter which tests if an element is a member of a set very efficiently. This allows use to see if an SSTable may contain data from the needed row/column
 
+## Spanner
+
+<a href="https://www.youtube.com/watch?v=IFbydfGV2lQ">Spanner Architecture Video (50 mins)</a>
+
+Spanner was Google's "next gen" cloud database that tackles some of the issues with BigTable at scale.
+
+Spanner allows for replication across a set of zones, zones are independent in location; either in different data centres or separated by server. 
+
+Each zone contains a several splits of many tables. Each split group is joined using Paxos which periodically elects a leader. This means we enforce _strong consistency_ as there will only be one master to write to. 
+
+As zone can be spread across multiple regions/continents, keeping these splits in sync can be tricky. 
+
+Spanner uses TrueTime to sync all the zones clocks; this quantifies the worst possible drift between clocks in all data centers. It gives two bounds, the lower is a time that has passed in all datacenters, the upper is a time that has passed nowhere.
+
+Truetime gets these bounds by using GPS satellites and atomic clocks. A compute node will sync with a GPS/atomic time every 30 seconds. 
+
+### Read Example
+
+When reading, a client contacts any node on the network, if the node is a worker/slave it asks the master if it has the latest data. If so it returns the requested information.
+
+If not, the leader gives the slave the timestamp of the latest data and tells it to wait until the data has been updated. 
+
+### Write Example
+
+When writing, the client talks directly to the leader, which aquires locks on the files and sends out at write command to its followers. Once a majority have written, it will ack the transaction. 
+
+![](assets/spanner3.png)
+
+
+> Aside: Paxos
+> 
+> A family of protocols for solving consensus in a network of unreliable processors.

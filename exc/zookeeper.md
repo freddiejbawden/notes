@@ -81,5 +81,22 @@ A system comprised of a number of processes electes a leader to command worker p
 
 A distributed lock system, such as Chubby would enforce the first requirement, but not the second. With ZooKeeper, we can designate a path as the ready _znode_, meaning that other processes will only have the configuration once the leader is finished. 
 
+## Example Usage
 
+### Configuration Management
+ 
+We can store a configuration in a znode `z_c`. When a process starts, it gets the configuration from `znode` using `getData` and specify a watch on it. WHen `z_c` is updated, all the processes are notified and they can re-get the configuration. 
 
+### Rendezvous Points
+
+If a clinet has a scheduled job, it may not always be clear where the workers or master will be on the network; however a worker may start before a master meaning it cannot simply read from a file. 
+
+Zookeeper can provide a rendezvous point `z_r` to all workers and the master. On start up, a worker will get a watch on `z_r` and are notified when the master fills in the network info. Even better, if `z_r` is ephermial, then the node will be cleaned after execution!
+
+### Locks
+
+We can use a znode as a lock; to acquire a lock, a client tries to create a znode with the Ephemeral flag. If it succeeds, the client holds the lock; o/w the client can watch the node until it has been freed.
+
+This suffers from the Herd Effect, where many clients will rush to get the next lock. 
+
+To overcome this we line up clients using children znodes, these use the Sequential flag to order themselves. Clients now watch the n-1 node until it is deleted and check if they are the lowest remaining, when it is the lock is theirs. Ephemeral flags allow crashed processes to release their locks, preventing blockage. 
