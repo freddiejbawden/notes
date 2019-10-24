@@ -100,6 +100,10 @@ class PageRankVertex
 
 ## Other Systems
 
+### GraphLab
+
+Graph lab is similar to Pregel in execution; each node is a vertex however rather than the message passing paradigm that Pregel follows, GraphLab allows for vertices to directly access neighboring nodes. Eliminiating these messages, it allows the system to choose when and how to move program state; this can allow the designer to more precisly distingush between data shared with all neighbours and data shared with a particualr neighbor by not naivly scattering messages. 
+
 ### GraphX 
 
 GraphX enables users to not ony process graph like data, but include unstructured and tabular data and allows for the data to be viewed both as a graph and collections _without_ any data movement or duplication. 
@@ -111,4 +115,19 @@ We can also do map reduce operations  through this method using a MapReduceTripl
 ![](assets/graphXMR.png)
 
 The `mrTriplets` operator produces a collectiton containing the sum of the inbound messages keyed by the destination ID. 
+
+### PowerGraph
+
+PowerGraph introduces an abstraction technique that aims to tachkle the power law problem. The power law distribution implies that a small subset of vertices connect to a large fraction of the graph. This is similar to the 80-20 rule that states that 20% of a population is responsible for 80% of its size; e.g. words in a langauge. 
+
+PowerBank borrows ideas from both Pregal and GraphLab; it uses GraphLabs shared-memory system whic hremoves the need for uses to worry about how messages are passed through the system. It borrows the communicateve gather step from Pregel, where neighbors send data to each other.
+
+Powergraph uses 3 stages in computing a superstep; 
+* **Gather**: Takes in data from all nodes and caches it locally
+* **Apply**: We then perform calculations on our vertex using the gathered data
+* **Scatter**: If our neighbour needs to change, we wake it and push messages to all active neighbors
+
+Powergraph provides a number of optimisations to this familiar set up; first it caches a previous value to reduce the number of unneeded reads to the neighbors; this is known as _delta caching_. It also relies on its neighbors to carry it over to the next iteration; if it recieves no instruction to stay alive it will deactivate. 
+
+Tradional graph libaries distribute the edges of a graph evenly among compute nodes. This is often not effective with power graphs as it will mean that there is a high amount of network traffic. Powergraph allows for vertices to be split across machines! This means that we can run gather and scatter operations more evenly compared to naively splitting vertices without considering edges. Further we can use a greedy heuristic to split vertices across machines. 
 
