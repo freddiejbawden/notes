@@ -108,8 +108,33 @@ This means that MHOs are generally really good at a small subset of problems, bu
 
 Free lunches can exist in the runtime and resampling domains, e.g. if one algorithm needs one execution of the fitness function, and the other needs one hundred, the first is better _only_ in the runtime domain. 
 
+## Random Walks
 
+A random walk is an undirected local search. We randomly move around a space and update a local and global fitness with each step. 
 
+As dimensions get higher, it get hard to cover a large amount of space as we can walk in so many different directions 
+
+Random walks are used in many MHO algorithms to introduce diversity. An unbiased random walk can be used to find the fitness landscape.
+
+We can use random walk as a baseline comparison for MHO algorithms. 
+
+### Lévy Flight
+
+A random walk in which the step lengths have probability distribution that is heavy-tailed. Heavy-tailed means that the probability drop off as x increases is greater than the exponent.
+
+![](assets/heavy-tailed.webp)
+
+### Informed Search
+
+A biased random walk where we bias our walk on a heuristic. This allows for best-first search methods. 
+
+### Bayesian Frameworks
+
+We can bias the search based on prior information, for example pheromones in ACO. We can uses Baye's to bias our random walk to express a belieft about a global optimum. 
+
+## Dynamical Systems
+
+We can also use dynamic behaviours to perform a walk; for example a cellular automata can be used to simulate dynamic systems.
 
 
 

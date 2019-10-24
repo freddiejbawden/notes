@@ -72,9 +72,23 @@ ZooKeeper provides two ordering guarantees:
 > 
 > An operation is linearizable if it given two operations S and T, the order of the operations; a, b, c is the same in S as it is in T. In the context of writing, this means that write a, will occur after b, after c _always_.
 
+### Implementation
+
+Zookeeper runs a set of servers, with a leader. The leader is elected and maintained for several seconds. It uses a state machine replication to tolerate faults. 
+
+A zoo keeper node is stored in memory and logged to disk. 
+
+A client connects to a Zookeeper node, this replica serves all read operations locally. If the client wants to write, the replica passes the request to the master. Which propagates it to the other replicas.; the leader serializes the operation and will ack it when a majority have completed the write.
+
+> _Aside_: 2-Phase-Commit
+>
+> 2PC are used when transactions need to be carried out reliably in a leader-participant protocol.  
+>
+> The leader first sends a "prepare" message to all participants. The participants then try and log the write transaction and reply with an acknowledgement. When the leader has recieved a threshold number of acks, it will send a commit message to tell the paritipants to apply the changes.
+
 ### Example
 
-A system comprised of a number of processes electes a leader to command worker processes. When a new leader takes charge it must change a large amount of configuration parameters in all the worker processes and itself. For this we want:
+A system comprised of a number of processes electes a leader to command  worker processes. When a new leader takes charge it must change a large amount of configuration parameters in all the worker processes and itself. For this we want:
 
 * The workers to use the configuration that is being changed
 * If the leader dies, we do not want teh processes to use the partial configuration. 
