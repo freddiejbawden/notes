@@ -12,7 +12,9 @@ Containers are based on the UNIX `chroot` command; this provides a new root dire
 
 ![](chroot.png)
 
-Chroot is a good solution however it doesn't allow for control over the resources allocated to each process; nor does it allow for the joining of several processes under one name space. For this we use `cgroups`. A `cgroup` is a limited allocation of resources that can be used by processes.
+Chroot is a good solution however it doesn't allow for control over the resources allocated to each process; nor does it allow for the joining of several processes under one name space. 
+
+For this we use `cgroups`. A `cgroup` is a limited allocation of resources that can be used by processes.
 
 ## Docker
 
@@ -50,10 +52,12 @@ However it has the side effects of
 ### Security Concerns
 Due to the bad isolation, if you have a bad configuration a container can reaech out of its container to attack others
 
-If the host kernal is vulnerable, all the docker instances beecome vulnerable as well, this is not a concern with VMs as they have their own kernal
+If the host kernal is vulnerable, all the docker instances become vulnerable as well, this is not a concern with VMs as they have their own kernal
 
-Relying on external ecosystems means that untrusteed or outdated code could make it onto your container
+Relying on external ecosystems means that untrusted or outdated code could make it onto your container
 
+## Docker vs KVM
 
+Docker provides many useful faetures such as layerd image and NAT (network address translation) which makes it easier to create complex networks with than raw containers. Docker's AUFS (the light R/W layer) is very slow comapred to volumes, which means for high I/O applications there will be overhead due to Docker NAT.  
 
-
+VMs can provide good performance however they suffer from their lack of confiurability. Good performance is dependent on how we manage pages, th CPU model and vCPU pinning. These factors can be tricky to configure in KVM. 
