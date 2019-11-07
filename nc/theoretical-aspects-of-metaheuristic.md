@@ -124,6 +124,8 @@ A random walk in which the step lengths have probability distribution that is he
 
 ![](assets/heavy-tailed.webp)
 
+It can be used for _scale-free_ search
+
 ### Informed Search
 
 A biased random walk where we bias our walk on a heuristic. This allows for best-first search methods. 

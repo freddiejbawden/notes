@@ -47,6 +47,49 @@ Assume one or more good programs exists for a problem, we can use these solution
 
 We can use common elements such as loops, functions or conditionals to reduce variability due to commonly known structures.
 
+## Basic Choices
+
+When creating a GP system, there are 5 things we must consider; 
+* Terminals
+* Functions
+* Fitness function
+* Control parameters
+* Termination criteria
+
+Terminals and functions are components of the programs, e.g. variables or operators. 
+
+
+## Syntax Types
+
+There are many ways of representing a GP
+
+### Pedestrain GP
+Uses a traditional GA binary string representation. Each bit string was made up of 225 bits which were a series of 5 bit words. These were encoded into a set of functions and terminals.
+
+Bit level mutation and crossover genetic operators were used to generate new individuals. This has previously been used to create a simple integer sequence
+
+### Strongly Typed GP
+
+Pedestrain GPs do not take into account whether the program makes sense to run, e.g. divide by zero errors. This may reduce exploration as we are cutting off branches sooner. 
+
+### Minimum Description Length
+
+MDL bases fitness not only off the fitness but its size. We can use MDL in the form;
+
+`MDL = Tree_Coding_Length + Exception_Coding_Length`
+
+`Tree_Coding_Length = (n_t + n_f) + n_t*lgT + n_f*lgF` where, n_t is the total number of terminals and n_f is the total number fo function calls in teh tree. T is the number of terminals in the terminal set, and similarly F is the size of the function set.
+
+`Exception_Coding_Length = x∈Terminals: ∑L(n_x,w_x,n_x)` where n+x is the number of cases represented by the particular leaf, x and w_X is the number of cases which are wrongly classified. L(n,k,b) is the total number of bits required to encode n bits given k 
+
+### Stack Based GP
+
+We can use a prefix structured tree sim. to LISP to generate programs. 
+
+### Machine Code GP
+
+We can use raw machine code, this is good for optimising but blows up the search space. 
+
 ## The Algorithm
 
 1. Choose a set of functions and terminals for the program

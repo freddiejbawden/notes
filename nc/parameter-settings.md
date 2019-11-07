@@ -133,7 +133,7 @@ We can also see that updating the best ant only is important, if we add from all
 
 ## Convergence
 
-We can easily show that an MHO will find the global optimum eventually through proof however these often yield exponential functions. 
+We can e#asily show that an MHO will find the global optimum eventually through proof however these often yield exponential functions. 
 
 It is therefore important to find parameter settings that help to speed up the search. 
 
