@@ -53,3 +53,11 @@ The BBH poses that the reason why GAs frequently succeed in generating solutions
 By reducing our problem into a set of paritial solutions, we dramatically reduce the complexity of the problem  allowing our GAs to perform. 
 
 There is a lack of consensus regarding if the BBH holds. 
+
+### Arguments Against BBH
+
+* Collateral convergence: Once the population begins tot converge, measuring the average fitness of a schemata is irrellevant as we cannot estimate it using the current population. 
+
+* Fitness variance: In reality, the fitness of a schema is arbitrarily far from the static average, even in the initial population.
+
+* Compositionality: The superposition of fit schemata does not guarantess larger schemata that are more fit and that they are less likely to survive. 

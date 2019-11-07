@@ -145,3 +145,7 @@ We can then update the links between each stop S during the execution of the alg
 
 From this using big brain math, we can prove that the expected quality of solutions strictly increases with time. 
 
+## Final Thoughts
+
+It is relatively easy to show that MHO algorithms can find the global optimum of an arbitrary search problem, but these proofs are not practically useful as the imply an exponentially long run time
+
