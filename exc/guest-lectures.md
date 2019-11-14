@@ -27,3 +27,22 @@ Its important to consider how code could be expanded in future, while its good t
 It is also important to consider how the impact introducing a new system propagates through the rest of the pipeline. If your new algorithm requires a new output format,make sure that can be done quickly first !
 
 Often a service is larger than most engineers can reason about, its impossible to keep track of everything going on in the system. We need to balance abstraction and complexity to  allow engineers to build clever solutions quickly. 
+
+# Intel Guest Lecture
+
+Deep learning on huge data sets is a good application of extreme computing methods. 
+
+We can use a hotspot analysis of our AI pipeline to visualize where the most effort is happening in our process. For example, we may spend a long time performing matrix multiplication. 
+
+We can address these problems on the hardware level, for example optimizing processors for matrix multiplication. 
+
+Focusing on building the systems at large scales, we must build from the ground up to get performance boosts - helpfully Intel has a new processor that can do exactly this :hmmm:
+
+# Amazon - Apache Spark
+
+Apache Spark is a framework for a large scale, interactive and in-memory data processing. 
+
+Apache Spark used to use an RDD structure, however recently (2016) released Datasets which are a more general formation. 
+
+An RDD we store data as Row+Schema, this allows for SQL interaction. The main advantage is that data sets are language agnostic, they can be represented as a Java object, CSV or JSON for example. 
+
