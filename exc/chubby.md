@@ -14,7 +14,7 @@ Chubby is made up of two main components; a server and a client library.
 
 A chubby cell contains a set of servers known as replicas, placed across racks to reduced correlated failure chance. The replicas use a distributed consensus protocol to elect a master. 
 
-![](assets/chubby.png)
+![](assets/chubby1.png)
 
 Each replica contains a simple database, but the master initiates reads and writes to the database. Non-master nodes simply copy the master. 
 
