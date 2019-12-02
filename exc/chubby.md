@@ -30,5 +30,22 @@ We can handle this using a lock-delay that specifies a timeout for each request.
 
 Another solution is using a sequencer. A lock holder may request a sequencer. THis is a byte string that describes the state of the lock immediately after acquisition; it contains the name of the lock , the mode in which it was acquired and the generation number. The client then passes the sequencer to th servers, if iit expects the operation to be protected. The server is tests if the sequencer is valid if not it rejects the request. The generation number changes with each release and aquisition, meaning if slow clients try to access a re-locked asset, they will be rejected. 
 
+## Caching and KeepAlive 
+
+To prevent clients from repeatidly calling the Chubby cell, clients will use caching. The master node maintains a knowledge of a clients cache and can invalidate if needed. 
+
+The burden on maintaining connection is put on the client through KeepAlive call. A client acks each master interaction using a KA call.
+
+## Sessions
+
+Using a combination of KA and leases we can establish a "connection" between the client and master. The client gives a lease to a  client, this means that the master is not allowed to unilaterally terminate the session. 
+
+A client cannot be sure if a master is alive or not; clients use a smaller local lease timeout to trigger a panic mode if the master does not respond before the timeout.
+
+## Master Failover
+
+When a master dies, things can potentially go very wrong. As Chubby locks are advisory, it is still possible for two clients to attempt to grab a file at the same time. This could occur during a master failover; in the old master a client gets a lock on A, the master fails and starts up without the knowledge of the previous lock on A and issues another lease. This leaves two clients with the same lock. 
+
+When a client's local timeout triggers, it considers that the master is jeoprodised. It then has a grace period before trying to reestablish a lock, this allows the old locks to die before new ones are established
 
 
