@@ -1,6 +1,7 @@
 ### Distributed Query Processing with Pig
 
 [Tutorial For Apache Pig](http://pig.apache.org/docs/r0.17.0/start.html#tutorial) 
+[Host For Tutorial Files](https://cwiki.apache.org/confluence/display/PIG/PigTutorial#PigTutorial-Pig_Tutorial_File)
 
 ## What is Pig?
 
