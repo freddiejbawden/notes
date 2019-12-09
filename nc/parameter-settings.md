@@ -60,53 +60,13 @@ We start with an `α > 4` to increase exploitation, and later begin to lower K b
 
 This means that for `α = 4.1 => K = 0.729`, meaning `α ~= 1.5` by modification. This will put our particles into an occsilating sttate.
 
-## Differential Evolution
-
-DE is similar to PSO, individual are continuos vectors. Apart  from the initialization there is no direct nosification of the vector.
-
-Diversity is maintained through "mutations" based on the differences in the population (hence differential) such that the algorithm is self-organising. 
-
-We can take the difference between;
-* a poor vector to a good one
-* or we can influence flow based on vectors of similar fitness
-
-
-### The Algorithm
-
-Given a population of N vectors of D dimensions;
-
-**Step 1**: `v_i(t+1) =x_q(t) +F·(x_r(t)−x_s(t))`
-`q`,`r`,`s` are random indexes, all different and different from i. 
-
-We modify the velocity of x_i by taking a function of a random sample of other particles in the system. 
-
-`F∈[0,2]⊂R` (this provides an amplification of the mutation)
-
-**Step 2**: We choose a random number `ρ_d∈[0,1),d∈{1,...,D}`. For each dimension in each vector we find the value; 
-`u_i(t+1) = (u_1i(t+1),u_2i(t+1),...,u_Di(t+1))`
-
-Where `u_id(t+1)` is chosen by; 
-
-![](assets/de1.png)
-
-**Step 3** We compare our new position `u_i` to the old one, if it is better `x_i(t+1) = u_i(t+1)` else `x_i(t+1) = x_i(t)`
-
-### Parameters
-
-In addition to the amplification factor F, we can modify `N` and `p`, the nubmer of vectors and crossover probability respectivly. Assumin gthere is no selection step we can find that the variance in vectors is expected to change in one generation by:
-
-`<Var>(x_(t+1)) = (2F^2⋅p - 2p/N + p^2/N + 1)Var(x_t)z` _some mega NE maths happens here to make this_
-
-We also find that the variance is constant if;
-
-`F = sqrt(1/N⋅(1 - p/2))`; we therefore can tune F to increase or decrease exploration. 
 
 ## ACO Convergence and Hypercube Framework
 
-If we assume that only one global optimum path exisits for a Min-Max Ant System, we can find the probability that a solution is found by time step `t`.
+If we assume that only one global optimum path exists for a Min-Max Ant System, we can find the probability that a solution is found by time step `t`.
 
 Assume the best path `S*` was found by ant at time `t*`. 
-
+ 
 Let `(i,j)`be an edge in `S*` but `τij(t∗) =τmin` and all `(k,I) ∉ S*` have `τkl=τmax`. If only the best ant lays pheromones, then the level on S* will increase withing time steps `t` by: 
 
 ![](assets/acoparams1.png)
@@ -144,6 +104,8 @@ The hypercube framework is a used for ACO, we can represent our solutions as a w
 We can then update the links between each stop S during the execution of the algorithm.
 
 From this using big brain math, we can prove that the expected quality of solutions strictly increases with time. 
+
+The hypercube framework also relates to the schema theorem, for example given a 4D hypercube; if we take a schema of 1*** this will match a cube in our hypercube; or 111* will match an edge 
 
 ## Final Thoughts
 

@@ -4,7 +4,7 @@ _Count how many  times I misspell theorem!_
 
 ## Schema Theorem
 
-### Schmemata
+### Schemata
 
 We can represent a solution to a problem using a set of values and wildcards (*). For example a binary strign of length 6; with 1's at position 1,3,6 and a 0 at position 4 could be shown as `1*10*1`. 
 
