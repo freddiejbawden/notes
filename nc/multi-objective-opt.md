@@ -15,7 +15,7 @@ Take the example of two objective functions F_1 and F_2.
 
 As we improve F_2, we harm F_1. To perform optimally we want to improve one function without losing performance on another. This is called "Pareto Efficincy".
 
-"Pareto Efficincy" is a state in which it is impossible to change the values as to make any criterion better off without making one criterion worse off. 
+"Pareto Efficincy" is a state in which it is impossible to change the values as to make any criterion better off without making one criterion worse off. Formally, an allocation of {x_1, ..., x_n} where x_i ∈ R for all i, is pareto optimal if there is no other feasible allocation {x_1', ... , x_n'} such that, for some utility function fitness, f,  for each dimension i, f(x_i') >= f(x_i) and  f(x_i') > f(x_i) for some i.
 
 ## GAs for MOO
 
