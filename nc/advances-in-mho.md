@@ -14,5 +14,3 @@ However we do have to sacrifice speed as a result.
 
 Our basic operations in DNA computing can be to cut, link and copy strands.
 
-## Molecular Computing
-
